@@ -1,0 +1,65 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/dolphinstudio101/video-prompt-schema/main/video-prompt.schema.json",
+  "title": "AI Video Prompt",
+  "description": "A structured prompt schema for AI video models such as Sora 2 and Seedance 2.0. Interactive builder: https://sora-json-prompt-builder.dolphinstudio101.workers.dev/",
+  "type": "object",
+  "required": ["subject"],
+  "additionalProperties": false,
+  "properties": {
+    "model": {
+      "type": "string",
+      "description": "Target model this prompt was tuned for.",
+      "examples": ["sora2", "seedance", "generic"]
+    },
+    "subject": {
+      "type": "string",
+      "description": "The main subject — state it first and concretely.",
+      "minLength": 1
+    },
+    "action": {
+      "type": "string",
+      "description": "What the subject does over time. Motion is what makes it video."
+    },
+    "environment": {
+      "type": "string",
+      "description": "Setting / background that grounds the subject across frames."
+    },
+    "camera": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "shot_size": {
+          "type": "string",
+          "enum": ["extreme wide shot", "wide shot", "medium shot", "close-up", "extreme close-up", "over-the-shoulder"]
+        },
+        "motion": {
+          "type": "string",
+          "description": "Camera movement, e.g. 'slow dolly in', 'orbit', 'drone aerial pullback'."
+        }
+      }
+    },
+    "duration_seconds": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 60,
+      "description": "Clip length. Most models stay coherent at 5–10s."
+    },
+    "aspect_ratio": {
+      "type": "string",
+      "enum": ["16:9", "9:16", "1:1", "21:9", "4:3"]
+    },
+    "look": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "style": { "type": "string", "description": "Film stock, lens, overall aesthetic." },
+        "lighting": { "type": "string", "description": "Lighting and mood." }
+      }
+    },
+    "negative": {
+      "type": "string",
+      "description": "What to avoid — text, logos, warping, extra limbs."
+    }
+  }
+}
